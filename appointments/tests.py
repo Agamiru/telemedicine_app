@@ -90,17 +90,4 @@ class TestViews(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-        # # Future time check
-        # appmnt_start = datetime.datetime(2020, 12, 23)
-        # print(f"appmt: {appmnt_start}")
-        # appmnt_end = datetime.datetime.now() + datetime.timedelta(days=4, hours=3)
-        #
-        # appmnt_kwargs = {
-        #     "start_time": str(appmnt_start), "end_time": str(appmnt_end),
-        #     "doctor": doc_inst.id, "patient": patnt_inst.id
-        # }
-        # response = self.client.post(
-        #     f"/create/appointment/{self.patient_user_inst.id}/", appmnt_kwargs
-        # )
-        # self.assertEqual(response.status_code, 400)
 
