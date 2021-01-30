@@ -18,17 +18,17 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 
 **End Points**
-- Register new User
+- Register new User:
   <domain_name>/register/
 
-- Add a doctor profile
+- Add a doctor profile:
   <domain_name>/register/doctor/
 
-- Add a patient profile
+- Add a patient profile:
   <domain_name>/register/patient/
 
-- Create an appointment
+- Create an appointment:
   <domain_name>/create/appointment/<user_id>/
 
-- Create unavailable time
+- Create unavailable time:
   <domain_name>/register/appointment/unavailable/<user_id>/
