@@ -21,7 +21,8 @@ class TestViews(TestCase):
     def test_view(self):
         user_model = get_user_model()
         user_inst, _ = user_model.objects.get_or_create(
-            email="Chidi@ymail.com", password="chidi007"
+            email="Chidi@ymail.com", password="chidi007",
+            is_doctor=True
         )
         self.data["user"] = user_inst.id
         response = self.client.post("/register/doctor/", self.data)
@@ -31,6 +32,16 @@ class TestViews(TestCase):
         new_data.pop("last_name")
         response = self.client.post("/register/doctor/", new_data)
         self.assertEqual(response.status_code, 400)
+
+        # Test unauthorized user
+        user_inst, _ = user_model.objects.get_or_create(
+            email="Chahk@ymail.com", password="chidi007",
+            is_doctor=False
+        )
+        new_data = self.data.copy()
+        new_data["user"] = user_inst.id
+        response = self.client.post("/register/doctor/", new_data)
+        self.assertEqual(response.status_code, 401)
 
 
 class TestModel(TestCase):
