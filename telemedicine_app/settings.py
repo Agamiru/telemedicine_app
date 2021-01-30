@@ -31,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", ".herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", ".herokuapp.com", '127.0.0.1']
 
 # Application definition
 
@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

@@ -52,7 +52,6 @@ class TestViews(TestCase):
         response = self.client.post(
             f"/create/appointment/unavailable/{self.doc_user_inst.id}/", unav_kwargs
         )
-        print(response.data)
         self.assertEqual(response.status_code, 200)
 
         # Test creating appointment with overlapping times
@@ -63,7 +62,7 @@ class TestViews(TestCase):
         patnt_inst, _ = Patient.objects.get_or_create(**patnt_data)
 
         appmnt_start = datetime.datetime.now() + datetime.timedelta(days=3)
-        appmnt_end = datetime.datetime.now() + datetime.timedelta(days=3, hours=3)
+        appmnt_end = datetime.datetime.now() + datetime.timedelta(days=3, hours=2)
 
         appmnt_kwargs = {
             "start_time": str(appmnt_start), "end_time": str(appmnt_end),
@@ -77,7 +76,7 @@ class TestViews(TestCase):
 
         # Test creating appointment with non overlapping times
         appmnt_start = datetime.datetime.now() + datetime.timedelta(days=4)
-        appmnt_end = datetime.datetime.now() + datetime.timedelta(days=4, hours=3)
+        appmnt_end = datetime.datetime.now() + datetime.timedelta(days=4, hours=2, minutes=47)
 
         appmnt_kwargs = {
             "start_time": str(appmnt_start), "end_time": str(appmnt_end),
