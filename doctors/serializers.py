@@ -7,4 +7,6 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        exclude = ["user"]
+        fields = [
+            "id", "user", "first_name", "last_name", "gender", "age"
+        ]
