@@ -1,4 +1,4 @@
-from django import forms
+from django.core.exceptions import ValidationError
 from django.forms.models import  BaseModelForm, ModelFormMetaclass
 from .models import Unavailable, Appointment
 
@@ -24,6 +24,7 @@ class AbstractDurationForm(BaseModelForm, metaclass=ModelFormMetaclass):
         self.check_for_overlaps(model)
 
     def check_for_overlaps(self, model):
+        message = "Please set an earlier or later date"
         doctor = self.cleaned_data.get("doctor")
         start_time = self.cleaned_data.get("start_time")
         end_time = self.cleaned_data.get("end_time")
@@ -31,13 +32,13 @@ class AbstractDurationForm(BaseModelForm, metaclass=ModelFormMetaclass):
         doctors_appointments = model.objects.filter(doctor=doctor)
         # Check for overlapping appointments
         if doctors_appointments.filter(start_time=start_time):
-            self.add_error("start_time", "Please set an earlier or later date")
+            raise ValidationError({"start_time": message})
         if doctors_appointments.filter(start_time__lt=start_time) \
                 .filter(end_time__gte=start_time):
-            self.add_error("start_time", "Please set an earlier or later date")
+            raise ValidationError({"start_time": message})
         if doctors_appointments.filter(start_time__gt=start_time) \
                 .filter(start_time__lt=end_time):
-            self.add_error("start_time", "Please set an earlier or later date")
+            raise ValidationError({"start_time": message})
 
     # Check that time filled in form isn't in the past or present
     def check_future_time(self, field: str):
@@ -45,17 +46,17 @@ class AbstractDurationForm(BaseModelForm, metaclass=ModelFormMetaclass):
         time_to_set = self.cleaned_data.get(field)
         time_delta = time_to_set - now
         if time_delta.total_seconds() <= 0:
-            self.add_error(field, "Please set a later time")
+            raise ValidationError({field: "Please set a later time"})
 
     # Check that ending is ahead of starting
     def check_positive_duration(self, field_1: str, field_2: str):
         earlier = self.cleaned_data.get(field_1)
         later = self.cleaned_data.get(field_2)
-        print(f"earlier: {earlier}, later: {later}")
         time_delta = later - earlier
 
         if time_delta.total_seconds() <= 0:
-            self.add_error(field_2, f"{field_2.title()} time must be ahead of {field_1.title()} time.")
+            message = f"{field_2.title()} time must be ahead of {field_1.title()} time."
+            raise ValidationError({field_2: message})
 
 
 class UnavailableForm(AbstractDurationForm):

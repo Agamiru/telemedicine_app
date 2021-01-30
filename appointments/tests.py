@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.test import TestCase
 from django.test import Client
@@ -7,9 +8,6 @@ from django.contrib.auth import get_user_model
 
 from doctors.models import Doctor
 from patients.models import Patient
-
-
-from .models import Appointment, Unavailable
 
 # Create your tests here.
 
@@ -54,7 +52,7 @@ class TestViews(TestCase):
         response = self.client.post(
             f"/create/appointment/unavailable/{self.doc_user_inst.id}/", unav_kwargs
         )
-        # print(response.data)
+        print(response.data)
         self.assertEqual(response.status_code, 200)
 
         # Test creating appointment with overlapping times
@@ -89,5 +87,31 @@ class TestViews(TestCase):
             f"/create/appointment/{self.patient_user_inst.id}/", appmnt_kwargs
         )
         self.assertEqual(response.status_code, 200)
+
+        # Test future time
+        appmnt_start = datetime.datetime(2020, 11, 2)
+        appmnt_end = datetime.datetime.now() + datetime.timedelta(days=4, hours=3)
+
+        appmnt_kwargs = {
+            "start_time": str(appmnt_start), "end_time": str(appmnt_end),
+            "doctor": doc_inst.id, "patient": patnt_inst.id
+        }
+        response = self.client.post(
+            f"/create/appointment/{self.patient_user_inst.id}/", appmnt_kwargs
+        )
+        self.assertEqual(response.status_code, 400)
+
+        # Test positive duration
+        appmnt_start = datetime.datetime.now() + datetime.timedelta(days=4)
+        appmnt_end = datetime.datetime.now()
+
+        appmnt_kwargs = {
+            "start_time": str(appmnt_start), "end_time": str(appmnt_end),
+            "doctor": doc_inst.id, "patient": patnt_inst.id
+        }
+        response = self.client.post(
+            f"/create/appointment/{self.patient_user_inst.id}/", appmnt_kwargs
+        )
+        self.assertEqual(response.status_code, 400)
 
 
