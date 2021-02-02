@@ -33,4 +33,4 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
   <domain_name>/create/appointment/<user_id>/
 
 - Create unavailable time:
-  <domain_name>/register/appointment/unavailable/<user_id>/
+  <domain_name>/create/appointment/unavailable/<user_id>/
