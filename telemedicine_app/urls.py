@@ -15,9 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http.response import HttpResponse
+from rest_framework import status
+
+
+def index(request):
+    return HttpResponse("Welcome to the backend", status=status.HTTP_200_OK)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", index),
     path("register/", include("registration.urls")),
     path("register/doctor/", include("doctors.urls")),
     path("register/patient/", include("patients.urls")),
