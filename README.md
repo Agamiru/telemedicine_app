@@ -35,6 +35,7 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
   *post data fields:*
 
+  - user: int (user id)
   - first_name
   - last_name
   - age
@@ -45,6 +46,7 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
   *post data fields:*
 
+  - user: int (user id)
   - first_name
   - last_name
   - age
