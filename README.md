@@ -20,16 +20,21 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 
 **End Points**
+
 - Register new User:
   <domain_name>/register/
-  *post data fields:
+
+  *post data fields:*
+
   - email
   - password
   - is_doctor: boolean
 
 - Add a doctor profile:
   <domain_name>/register/doctor/
-  *post data fields:
+
+  *post data fields:*
+
   - first_name
   - last_name
   - age
@@ -37,7 +42,9 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 - Add a patient profile:
   <domain_name>/register/patient/
-  *post data fields:
+
+  *post data fields:*
+
   - first_name
   - last_name
   - age
@@ -45,7 +52,9 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 - Create an appointment:
   <domain_name>/create/appointment/<user_id>/
-  *post data fields:
+
+  *post data fields:*
+
   - start_time: Unix DateTime format
   - end_time: Unix DateTime format
   - doctor: int(doctor_id)
@@ -53,7 +62,9 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 - Create unavailable time:
   <domain_name>/create/appointment/unavailable/<user_id>/
-  *post data fields:
+
+  *post data fields:*
+
   - start_time: Unix DateTime format
   - end_time: Unix DateTime format
   - doctor: int(doctor_id)
