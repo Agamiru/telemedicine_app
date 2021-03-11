@@ -14,7 +14,7 @@ class TestViews(TestCase):
         self.client = Client()
         doc_data = {
             "first_name": "Chidi", "last_name": "Nnadi",
-            "age": 46, "gender": "M"
+            "age": 46, "gender": "other"
         }
         self.data = doc_data
 

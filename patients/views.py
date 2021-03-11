@@ -21,7 +21,12 @@ class RegisterPatient(APIView):
     def post(self, request):
         is_patient = self.is_patient(request)
         if is_patient[0]:
-            serializer = PatientSerializer(data=request.data)
+            data = request.data.copy()
+            # Title case gender
+            gender = data.get("gender")
+            if gender is not None:
+                data["gender"] = gender.title()
+            serializer = PatientSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)

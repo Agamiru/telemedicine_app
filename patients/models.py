@@ -8,9 +8,9 @@ from registration.models import User
 
 class Patient(models.Model):
     gender_choices = (
-        ("M", "Male"),
-        ("F", "Female"),
-        ("O", "Other")
+        ("Male", "Male"),
+        ("Female", "Female"),
+        ("Other", "Other")
     )
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="patient"
@@ -19,7 +19,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=100)
     other_names = models.CharField(max_length=100, blank=True)
     age = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=gender_choices)
+    gender = models.CharField(max_length=10, choices=gender_choices, blank=False)
     emr = models.JSONField(default=dict)
 
     def save(self, *args, **kwargs):

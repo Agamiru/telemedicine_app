@@ -8,8 +8,8 @@ from registration.models import User
 
 class Doctor(models.Model):
     gender_choices = (
-        ("M", "Male"),
-        ("F", "Female"),
+        ("Male", "Male"),
+        ("Female", "Female"),
     )
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="doctor"
@@ -18,7 +18,7 @@ class Doctor(models.Model):
     last_name = models.CharField(max_length=100)
     other_names = models.CharField(max_length=100, blank=True)
     age = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=gender_choices, blank=False)
+    gender = models.CharField(max_length=10, choices=gender_choices, blank=False)
     # Things like specialties, background, qualifications and other info can be specified here.
     professional_info = models.JSONField(default=dict)
 
