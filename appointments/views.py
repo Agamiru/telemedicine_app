@@ -42,8 +42,10 @@ class AppointmentMixin:
         user_model = get_user_model()
         try:
             user = user_model.objects.get(id=user_id, is_doctor=is_doctor)
+            # Users must have a doctors profile to create unavailable times
             if user and self.user_type == "Doctor" and hasattr(user, "doctor"):
                 return True
+            # Users must have a patients profile to create an appointment
             elif user and self.user_type == "Patient" and hasattr(user, "patient"):
                 return True
             else:
