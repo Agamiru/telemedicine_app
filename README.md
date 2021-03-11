@@ -13,7 +13,8 @@ Doctors can set their unavailable time, there are checks to ensure no overlaps.
 
 **Limitations**
 
-- No authentication scheme on the backend, supported request methods are only post.
+- No authentication scheme on the backend.
+- Supported request methods are only post.
 - Testing should not be from a browser because of cors restrictions.
 
 
