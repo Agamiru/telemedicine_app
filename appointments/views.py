@@ -19,7 +19,7 @@ err = TypeVar("err", bound=Exception)
 class AppointmentMixin:
     form = None
     serializer = None
-    message = "User with id '{user_id}' is not a {user_type}"
+    message = "User with id '{user_id}' is either not a {user_type} or has no {user_type}'s profile"
     user_type: str = None
 
     def post(self, request, user_id):
@@ -42,11 +42,14 @@ class AppointmentMixin:
         user_model = get_user_model()
         try:
             user = user_model.objects.get(id=user_id, is_doctor=is_doctor)
-            if user:
+            if user and self.user_type == "Doctor" and hasattr(user, "doctor"):
                 return True
+            elif user and self.user_type == "Patient" and hasattr(user, "patient"):
+                return True
+            else:
+                return False
         except doesnt_exist:
             return False
-        return False
 
     def form_valid_or_err(self, data: dict) -> Union[Tuple[bool, None], Tuple[bool, err]]:
         data = dict(data)

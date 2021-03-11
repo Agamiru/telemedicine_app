@@ -69,6 +69,7 @@ class TestViews(TestCase):
             "doctor": doc_inst.id, "patient": patnt_inst.id
         }
 
+        # User has no doc profile
         response = self.client.post(
             f"/create/appointment/{self.patient_user_inst.id}/", appmnt_kwargs
         )
